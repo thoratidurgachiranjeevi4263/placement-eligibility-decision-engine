@@ -5,7 +5,7 @@ public class Main {
     System.out.println("Placement Eligibility Decision Engine");
     System.out.println("Enter candidate details");
     System.out.print("Name: ");
-    String name = sc.next();
+    String name = sc.nextLine();
     System.out.print("Percentage: ");
     double percentage = sc.nextDouble();
     System.out.print("Backlogs: ");
@@ -30,8 +30,7 @@ public class Main {
     System.out.println("Maximum Backlogs: " + job.getMaximumBacklogs());
     System.out.println("Required Graduation Year: " + job.getRequiredGraduationYear());
 
-    EligibilityRule[] rules = {new PercentageRule(), new BacklogRule(), new GraduationYear()};
-
+   EligibilityChecker checker = new EligibilityChecker();
     System.out.println("=====================================================");
     System.out.println("Eligibility Result:");
     System.out.println("======================================================");
@@ -39,16 +38,7 @@ public class Main {
     System.out.println("Company: " + job.getCompany());
     System.out.println("Role: " + job.getRole());
     System.out.println();
-    boolean eligible = true;
-    for(int i =0;i<rules.length;i++) {
-      boolean passed = rules[i].check(candidate, job);
-      if(passed) {
-        System.out.println(rules[i].getRuleName() + ": PASS");
-      } else {
-        System.out.println(rules[i].getRuleName() + ": FAIL");
-        eligible = false;
-      }
-    }
+    boolean eligible = checker.evaluate(candidate, job);
     System.out.println();
     if(eligible) {
       System.out.println("Final Result: ELIGIBLE");
