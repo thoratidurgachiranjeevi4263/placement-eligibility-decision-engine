@@ -3,7 +3,7 @@ public class Main {
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
     System.out.println("Placement Eligibility Decision Engine");
-    System.out.println("Enter candidate details:");
+    System.out.println("Enter candidate details");
     System.out.print("Name: ");
     String name = sc.next();
     System.out.print("Percentage: ");
@@ -30,10 +30,8 @@ public class Main {
     System.out.println("Maximum Backlogs: " + job.getMaximumBacklogs());
     System.out.println("Required Graduation Year: " + job.getRequiredGraduationYear());
 
-    boolean percentagePass = candidate.getPercentage() >= job.getMinimumPercentage();
-    boolean backlogsPass = candidate.getBacklogs() <= job.getMaximumBacklogs();
-    boolean graduationYearPass = candidate.getGraduationYear() == job.getRequiredGraduationYear();
-    boolean isEligible = percentagePass && backlogsPass && graduationYearPass;
+    EligibilityRule[] rules = {new PercentageRule(), new BacklogRule(), new GraduationYear()};
+
     System.out.println("=====================================================");
     System.out.println("Eligibility Result:");
     System.out.println("======================================================");
@@ -41,23 +39,18 @@ public class Main {
     System.out.println("Company: " + job.getCompany());
     System.out.println("Role: " + job.getRole());
     System.out.println();
-    if(percentagePass) {
-      System.out.println("Percentage: PASS");
-    } else {
-      System.out.println("Percentage: FAIL");
-    }
-    if(backlogsPass) {
-      System.out.println("Backlogs: PASS");
-    } else {
-      System.out.println("Backlogs: FAIL");
-    }
-    if(graduationYearPass) {
-      System.out.println("Graduation Year: PASS");
-    } else {
-      System.out.println("Graduation Year: FAIL");
+    boolean eligible = true;
+    for(int i =0;i<rules.length;i++) {
+      boolean passed = rules[i].check(candidate, job);
+      if(passed) {
+        System.out.println(rules[i].getRuleName() + ": PASS");
+      } else {
+        System.out.println(rules[i].getRuleName() + ": FAIL");
+        eligible = false;
+      }
     }
     System.out.println();
-    if(isEligible) {
+    if(eligible) {
       System.out.println("Final Result: ELIGIBLE");
     } else {
       System.out.println("Final Result: NOT ELIGIBLE");
