@@ -3,12 +3,14 @@ public class Candidate {
   private double percentage;
   private int backlogs;
   private int graduationYear;
+  private String[] skills;
 
-  public Candidate(String name, double percentage, int backlogs, int graduationYear) {
+  public Candidate(String name, double percentage, int backlogs, int graduationYear, String[] skills) {
     this.name = name;
     this.percentage = percentage;
     this.backlogs = backlogs;
     this.graduationYear = graduationYear;
+    this.skills = skills;
   }
   public String getName() {
     return name;
@@ -22,4 +24,12 @@ public class Candidate {
   public int getGraduationYear() {
     return graduationYear;
   }
+  public boolean hasSkill(String skill) {
+    for (String s : skills) {
+      if (s.equalsIgnoreCase(skill)) {
+        return true;
+      }
+    }
+    return false;
+  } 
 }

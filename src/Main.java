@@ -12,7 +12,15 @@ public class Main {
     int backlogs = sc.nextInt();
     System.out.print("Graduation Year: ");
     int graduationYear = sc.nextInt();
-    Candidate candidate = new Candidate(name, percentage, backlogs, graduationYear);
+    System.out.print("Number of skills: ");
+    int skillCount = sc.nextInt();
+    String[] skills = new String[skillCount];
+    System.out.println("Enter skills (one per line):");
+    for (int i = 0; i < skillCount; i++) {
+      skills[i] = sc.next();
+    }
+
+    Candidate candidate = new Candidate(name, percentage, backlogs, graduationYear, skills);
     System.out.println("----------------------------------------------------");
     System.out.println("Candidate Details:");
     System.out.println("Name: " + candidate.getName());
@@ -32,7 +40,7 @@ public class Main {
 
    EligibilityChecker checker = new EligibilityChecker();
     System.out.println("=====================================================");
-    System.out.println("Eligibility Result:");
+    System.out.println("Placement Eligibility Result:");
     System.out.println("======================================================");
     System.out.println("Name: " + candidate.getName());
     System.out.println("Company: " + job.getCompany());
@@ -46,5 +54,6 @@ public class Main {
       System.out.println("Final Result: NOT ELIGIBLE");
     }
     System.out.println("======================================================");
+    sc.close();
   }
 }
